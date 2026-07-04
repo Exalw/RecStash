@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -48,13 +49,17 @@ fun EditRecipeScreen(
                     .safeDrawingPadding()
                     .padding(16.dp)
             ) {
-                OutlinedButton(onClick = onCancel) {
+                OutlinedButton(
+                    modifier = Modifier.testTag("cancel_button"),
+                    onClick = onCancel
+                ) {
                     Text("Cancel")
                 }
 
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Button(
+                    modifier = Modifier.testTag("save_button"),
                     onClick = {
                         if (name.isNotBlank()) {
                             onSave(
@@ -73,6 +78,7 @@ fun EditRecipeScreen(
                 Spacer(modifier = Modifier.width(12.dp))
 
                 OutlinedButton(
+                    modifier = Modifier.testTag("delete_button"),
                     onClick = { showDeleteConfirm = true }
                 ) {
                     Text("Delete")
@@ -98,7 +104,9 @@ fun EditRecipeScreen(
                 value = name,
                 onValueChange = { name = it },
                 label = { Text("Recipe name") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("edit_name")
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -107,7 +115,9 @@ fun EditRecipeScreen(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Description") },
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("edit_description"),
                 minLines = 3
             )
 
@@ -144,6 +154,7 @@ fun EditRecipeScreen(
             text = { Text("Are you sure?") },
             confirmButton = {
                 Button(
+                    modifier = Modifier.testTag("delete_first_yes_button"),
                     onClick = {
                         showDeleteConfirm = false
                         showVerySureConfirm = true
@@ -153,7 +164,10 @@ fun EditRecipeScreen(
                 }
             },
             dismissButton = {
-                OutlinedButton(onClick = { showDeleteConfirm = false }) {
+                OutlinedButton(
+                    modifier = Modifier.testTag("delete_first_no_button"),
+                    onClick = { showDeleteConfirm = false }
+                ) {
                     Text("No")
                 }
             }
@@ -167,16 +181,20 @@ fun EditRecipeScreen(
             text = { Text("Are you very sure? This cannot be undone.") },
             confirmButton = {
                 Button(
+                    modifier = Modifier.testTag("delete_final_confirm_button"),
                     onClick = {
                         showVerySureConfirm = false
                         onDelete(recipe)
                     }
                 ) {
-                    Text("Delete")
+                    Text("Delete it")
                 }
             },
             dismissButton = {
-                OutlinedButton(onClick = { showVerySureConfirm = false }) {
+                OutlinedButton(
+                    modifier = Modifier.testTag("delete_final_cancel_button"),
+                    onClick = { showVerySureConfirm = false }
+                ) {
                     Text("Cancel")
                 }
             }
