@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
+import androidx.room.Delete
+import androidx.room.Update
 
 @Dao
 interface RecipeDao {
@@ -12,4 +14,10 @@ interface RecipeDao {
 
     @Insert
     suspend fun insertRecipe(recipe: RecipeEntity)
+
+    @Delete
+    suspend fun deleteRecipe(recipe: RecipeEntity)
+
+    @Update
+    suspend fun updateRecipe(recipe: RecipeEntity)
 }
