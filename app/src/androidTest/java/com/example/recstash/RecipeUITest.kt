@@ -31,4 +31,19 @@ class RecipeUiTest {
         composeTestRule.onNodeWithText("Gnocchi").assertExists()
         composeTestRule.onNodeWithText("Potato pasta").assertDoesNotExist()
     }
+
+    @Test
+    fun emptyRecipeName_staysOnAddScreen() {
+        composeTestRule.setContent {
+            MaterialTheme {
+                RecipeApp()
+            }
+        }
+
+        composeTestRule.onNodeWithText("+").performClick()
+        composeTestRule.onNodeWithText("Description").performTextInput("No title")
+        composeTestRule.onNodeWithText("Save").performClick()
+
+        composeTestRule.onNodeWithText("Add Recipe").assertExists()
+    }
 }
