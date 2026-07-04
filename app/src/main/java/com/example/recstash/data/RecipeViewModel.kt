@@ -23,7 +23,25 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         imagePath: String?
     ) {
         viewModelScope.launch {
-            repository.addRecipe(name, description, imagePath)
+            repository.addRecipe(
+                RecipeEntity(
+                    name = name,
+                    description = description,
+                    imagePath = imagePath
+                )
+            )
+        }
+    }
+
+    fun updateRecipe(recipe: RecipeEntity) {
+        viewModelScope.launch {
+            repository.updateRecipe(recipe)
+        }
+    }
+
+    fun deleteRecipe(recipe: RecipeEntity) {
+        viewModelScope.launch {
+            repository.deleteRecipe(recipe)
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.recstash.data.RecipeDao
 import com.example.recstash.data.RecipeDatabase
+import com.example.recstash.data.RecipeEntity
 import com.example.recstash.data.RecipeRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.flow.first
@@ -45,9 +46,11 @@ internal class RecipeRepositoryTest {
         val repository = RecipeRepository(dao)
 
         repository.addRecipe(
-            name = "Ramen",
-            description = "Noodles",
-            imagePath = "/fake/path/ramen.jpg"
+            RecipeEntity(
+                name = "Ramen",
+                description = "Noodles",
+                imagePath = "/fake/path/ramen.jpg"
+            )
         )
 
         val recipes = repository.recipes.first()
