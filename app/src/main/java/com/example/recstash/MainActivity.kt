@@ -41,14 +41,16 @@ class MainActivity : ComponentActivity() {
 fun RecipeApp(
     viewModel: RecipeViewModel = viewModel()
 ) {
-    var screen by remember { mutableStateOf(Screen.List) }
+    var screen by remember { mutableStateOf<Screen>(Screen.List) }
     val recipes by viewModel.recipes.collectAsState()
 
-    when (screen) {
+    when (val currentScreen = screen) {
         Screen.List -> RecipeListScreen(
             recipes = recipes,
             onAddRecipe = { screen = Screen.Add },
-            onRecipeClick = { }
+            onRecipeClick = { recipe ->
+                screen = Screen.Detail(recipe)
+            }
         )
 
         Screen.Add -> AddRecipeScreen(
@@ -57,6 +59,13 @@ fun RecipeApp(
                 screen = Screen.List
             },
             onCancel = {
+                screen = Screen.List
+            }
+        )
+
+        is Screen.Detail -> RecipeDetailScreen(
+            recipe = currentScreen.recipe,
+            onBack = {
                 screen = Screen.List
             }
         )
@@ -79,6 +88,7 @@ fun RecipeListScreen(
         Column(
             modifier = Modifier
                 .padding(padding)
+                .safeDrawingPadding()
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
@@ -159,6 +169,7 @@ fun AddRecipeScreen(
 
     Column(
         modifier = Modifier
+            .safeDrawingPadding()
             .padding(16.dp)
             .fillMaxSize()
     ) {
@@ -222,9 +233,53 @@ fun AddRecipeScreen(
     }
 }
 
-enum class Screen {
-    List,
-    Add
+@Composable
+fun RecipeDetailScreen(
+    recipe: RecipeEntity,
+    onBack: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .safeDrawingPadding()
+            .padding(16.dp)
+            .fillMaxSize()
+    ) {
+        OutlinedButton(onClick = onBack) {
+            Text("Back")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = recipe.name,
+            style = MaterialTheme.typography.headlineLarge
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        if (recipe.imagePath != null) {
+            AsyncImage(
+                model = File(recipe.imagePath),
+                contentDescription = recipe.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 420.dp)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        Text(
+            text = recipe.description,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+sealed class Screen {
+    object List : Screen()
+    object Add : Screen()
+    data class Detail(val recipe: RecipeEntity) : Screen()
 }
 
 // PREVIEW
@@ -251,6 +306,21 @@ fun AddRecipeScreenPreview() {
         AddRecipeScreen(
             onSave = { _, _, _ -> },
             onCancel = {}
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RecipeDetailScreenPreview() {
+    MaterialTheme {
+        RecipeDetailScreen(
+            recipe = RecipeEntity(
+                name = "Pasta",
+                description = "A simple tomato pasta with garlic and basil.",
+                imagePath = null
+            ),
+            onBack = {}
         )
     }
 }
