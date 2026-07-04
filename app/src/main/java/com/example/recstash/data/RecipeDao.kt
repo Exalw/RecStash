@@ -1,0 +1,15 @@
+package com.example.recstash
+
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface RecipeDao {
+    @Query("SELECT * FROM recipes ORDER BY id DESC")
+    fun getAllRecipes(): Flow<List<RecipeEntity>>
+
+    @Insert
+    suspend fun insertRecipe(recipe: RecipeEntity)
+}

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,27 +30,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun RecipeApp() {
+fun RecipeApp(
+    viewModel: RecipeViewModel = viewModel()
+) {
     var screen by remember { mutableStateOf(Screen.List) }
-    var recipes by remember {
-        mutableStateOf(
-            listOf(
-                Recipe("Pasta", "Simple tomato pasta"),
-                Recipe("Chili", "Beans, tomato, spices")
-            )
-        )
-    }
+    val recipes by viewModel.recipes.collectAsState()
 
     when (screen) {
         Screen.List -> RecipeListScreen(
             recipes = recipes,
             onAddRecipe = { screen = Screen.Add },
-            onRecipeClick = { /* later: open detail screen */ }
+            onRecipeClick = { }
         )
 
         Screen.Add -> AddRecipeScreen(
             onSave = { name, description ->
-                recipes = recipes + Recipe(name, description)
+                viewModel.addRecipe(name, description)
                 screen = Screen.List
             },
             onCancel = {
@@ -61,9 +57,9 @@ fun RecipeApp() {
 
 @Composable
 fun RecipeListScreen(
-    recipes: List<Recipe>,
+    recipes: List<RecipeEntity>,
     onAddRecipe: () -> Unit,
-    onRecipeClick: (Recipe) -> Unit
+    onRecipeClick: (RecipeEntity) -> Unit
 ) {
     Scaffold(
         floatingActionButton = {
@@ -99,7 +95,7 @@ fun RecipeListScreen(
 
 @Composable
 fun RecipeListItem(
-    recipe: Recipe,
+    recipe: RecipeEntity,
     onClick: () -> Unit
 ) {
     Card(
@@ -185,11 +181,6 @@ fun AddRecipeScreen(
     }
 }
 
-data class Recipe(
-    val name: String,
-    val description: String
-)
-
 enum class Screen {
     List,
     Add
@@ -203,8 +194,8 @@ fun RecipeListScreenPreview() {
     MaterialTheme {
         RecipeListScreen(
             recipes = listOf(
-                Recipe(name = "Pasta", description = "Simple tomato pasta"),
-                Recipe(name = "Chili", description = "Beans, tomato, spices")
+                RecipeEntity(name = "Pasta", description = "Simple tomato pasta"),
+                RecipeEntity(name = "Chili", description = "Beans, tomato, spices")
             ),
             onAddRecipe = {},
             onRecipeClick = {}
