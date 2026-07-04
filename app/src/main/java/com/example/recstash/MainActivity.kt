@@ -112,30 +112,27 @@ fun RecipeListItem(
             .padding(vertical = 6.dp)
             .clickable { onClick() }
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .fillMaxWidth()
+                .heightIn(min = 72.dp),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
         ) {
             if (recipe.imagePath != null) {
                 AsyncImage(
                     model = File(recipe.imagePath),
                     contentDescription = recipe.name,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
+                        .size(72.dp)
+                        .padding(end = 12.dp)
                 )
-
-                Spacer(modifier = Modifier.height(8.dp))
             }
+
             Text(
                 text = recipe.name,
-                style = MaterialTheme.typography.titleMedium
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = recipe.description,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.weight(1f)
             )
         }
     }
