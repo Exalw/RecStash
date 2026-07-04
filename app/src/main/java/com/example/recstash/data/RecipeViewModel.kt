@@ -1,4 +1,4 @@
-package com.example.recstash
+package com.example.recstash.data
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

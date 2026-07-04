@@ -1,4 +1,4 @@
-package com.example.recstash
+package com.example.recstash.data
 
 class RecipeRepository(
     private val recipeDao: RecipeDao

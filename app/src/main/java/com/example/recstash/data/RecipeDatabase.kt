@@ -1,4 +1,4 @@
-package com.example.recstash
+package com.example.recstash.data
 
 import android.content.Context
 import androidx.room.Database

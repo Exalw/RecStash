@@ -1,4 +1,4 @@
-package com.example.recstash
+package com.example.recstash.data
 
 import androidx.room.Dao
 import androidx.room.Insert
