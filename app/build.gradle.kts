@@ -63,4 +63,6 @@ dependencies {
     ksp("androidx.room:room-compiler:2.7.0")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+
+    implementation("io.coil-kt.coil3:coil-compose:3.0.4")
 }

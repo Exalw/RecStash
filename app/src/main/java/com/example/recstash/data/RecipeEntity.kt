@@ -9,5 +9,7 @@ data class RecipeEntity(
     val id: Long = 0,
 
     val name: String,
-    val description: String
+    val description: String,
+
+    val imagePath: String? = null
 )

@@ -5,11 +5,16 @@ class RecipeRepository(
 ) {
     val recipes = recipeDao.getAllRecipes()
 
-    suspend fun addRecipe(name: String, description: String) {
+    suspend fun addRecipe(
+        name: String,
+        description: String,
+        imagePath: String?
+    ) {
         recipeDao.insertRecipe(
             RecipeEntity(
                 name = name,
-                description = description
+                description = description,
+                imagePath = imagePath
             )
         )
     }

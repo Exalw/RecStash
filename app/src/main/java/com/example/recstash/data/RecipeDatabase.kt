@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [RecipeEntity::class],
-    version = 1
+    version = 2
 )
 abstract class RecipeDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
@@ -19,10 +19,11 @@ abstract class RecipeDatabase : RoomDatabase() {
         fun getDatabase(context: Context): RecipeDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    RecipeDatabase::class.java,
-                    "recipe_database"
-                ).build()
+                                context.applicationContext,
+                                RecipeDatabase::class.java,
+                                "recipe_database"
+                            ).fallbackToDestructiveMigration(false)
+                    .build()
 
                 INSTANCE = instance
                 instance

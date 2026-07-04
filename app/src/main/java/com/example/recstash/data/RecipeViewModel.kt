@@ -17,9 +17,13 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         initialValue = emptyList()
     )
 
-    fun addRecipe(name: String, description: String) {
+    fun addRecipe(
+        name: String,
+        description: String,
+        imagePath: String?
+    ) {
         viewModelScope.launch {
-            repository.addRecipe(name, description)
+            repository.addRecipe(name, description, imagePath)
         }
     }
 }
