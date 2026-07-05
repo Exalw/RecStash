@@ -69,6 +69,8 @@ fun EditRecipeScreen(
                                 recipe.copy(
                                     name = name,
                                     description = description,
+                                    ingredients = ingredients,
+                                    instructions = instructions,
                                     imagePath = imagePath
                                 )
                             )
@@ -239,6 +241,8 @@ fun EditRecipeScreenPreview() {
             recipe = RecipeEntity(
                 name = "Pasta",
                 description = "A simple tomato pasta with garlic and basil.",
+                ingredients = "Pasta\nTomatoes\nGarlic",
+                instructions = "Boil pasta\nCook sauce\nMix together",
                 imagePath = null
             ),
             onSave = {},
