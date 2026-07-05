@@ -14,6 +14,8 @@ interface RecipeDao {
 
     @Insert
     suspend fun insertRecipe(recipe: RecipeEntity)
+    @Insert
+    suspend fun insertRecipes(recipes: List<RecipeEntity>)
 
     @Update
     suspend fun updateRecipe(recipe: RecipeEntity)

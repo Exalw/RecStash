@@ -4,6 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Database(
     entities = [RecipeEntity::class],
@@ -22,8 +26,19 @@ abstract class RecipeDatabase : RoomDatabase() {
                                 context.applicationContext,
                                 RecipeDatabase::class.java,
                                 "recipe_database"
-                            ).fallbackToDestructiveMigration(false)
+                )
+                    .addCallback(object : RoomDatabase.Callback() {
+                    override fun onCreate(db: SupportSQLiteDatabase) {
+                        super.onCreate(db)
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            INSTANCE?.recipeDao()?.insertRecipes(DefaultRecipes.recipes)
+                        }
+                    }
+                })
+                    .fallbackToDestructiveMigration(false)
                     .build()
+
 
                 INSTANCE = instance
                 instance
