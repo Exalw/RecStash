@@ -21,8 +21,14 @@ fun RecipeApp(
         )
 
         Screen.Add -> AddRecipeScreen(
-            onSave = { name, description, imagePath ->
-                viewModel.addRecipe(name, description, imagePath)
+            onSave = { name, description, ingredients, instructions, imagePath ->
+                viewModel.addRecipe(
+                    name = name,
+                    description = description,
+                    ingredients = ingredients,
+                    instructions = instructions,
+                    imagePath = imagePath
+                )
                 screen = Screen.List
             },
             onCancel = {

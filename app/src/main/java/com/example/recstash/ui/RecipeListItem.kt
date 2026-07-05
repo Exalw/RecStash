@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.recstash.data.RecipeEntity
-import java.io.File
+import com.example.recstash.data.imageModelFromPath
 
 @Composable
     fun RecipeListItem(
@@ -36,7 +36,7 @@ import java.io.File
             ) {
                 if (recipe.imagePath != null) {
                     AsyncImage(
-                        model = File(recipe.imagePath),
+                        model = imageModelFromPath(recipe.imagePath),
                         contentDescription = recipe.name,
                         modifier = Modifier
                             .size(72.dp)

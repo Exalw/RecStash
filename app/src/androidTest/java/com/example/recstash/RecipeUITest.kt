@@ -27,7 +27,7 @@ class RecipeUiTest {
         composeTestRule.onNodeWithText("+").performClick()
 
         composeTestRule.onNodeWithText("Recipe name").performTextInput("Gnocchi")
-        composeTestRule.onNodeWithText("Description").performTextInput("Potato pasta")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("Potato pasta")
 
         composeTestRule.onNodeWithText("Save").performClick()
 
@@ -44,7 +44,7 @@ class RecipeUiTest {
         }
 
         composeTestRule.onNodeWithText("+").performClick()
-        composeTestRule.onNodeWithText("Description").performTextInput("No title")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("No title")
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText("Add Recipe").assertExists()
@@ -63,7 +63,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(oldTitle)
-        composeTestRule.onNodeWithText("Description").performTextInput("Potato pasta")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("Potato pasta")
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(oldTitle).performClick()
@@ -91,7 +91,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(oldTitle)
-        composeTestRule.onNodeWithText("Description").performTextInput("Original description")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("Original description")
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(oldTitle).performClick()
@@ -120,7 +120,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(title)
-        composeTestRule.onNodeWithText("Description").performTextInput(oldDescription)
+        composeTestRule.onNodeWithTag("add_description").performTextInput(oldDescription)
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(title).performClick()
@@ -149,7 +149,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(title)
-        composeTestRule.onNodeWithText("Description").performTextInput(oldDescription)
+        composeTestRule.onNodeWithTag("add_description").performTextInput(oldDescription)
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(title).performClick()
@@ -176,7 +176,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(title)
-        composeTestRule.onNodeWithText("Description").performTextInput("Should stay")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("Should stay")
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(title).performClick()
@@ -200,7 +200,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(title)
-        composeTestRule.onNodeWithText("Description").performTextInput("Should stay")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("Should stay")
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(title).performClick()
@@ -225,7 +225,7 @@ class RecipeUiTest {
 
         composeTestRule.onNodeWithText("+").performClick()
         composeTestRule.onNodeWithText("Recipe name").performTextInput(title)
-        composeTestRule.onNodeWithText("Description").performTextInput("Should disappear")
+        composeTestRule.onNodeWithTag("add_description").performTextInput("Should disappear")
         composeTestRule.onNodeWithText("Save").performClick()
 
         composeTestRule.onNodeWithText(title).performClick()

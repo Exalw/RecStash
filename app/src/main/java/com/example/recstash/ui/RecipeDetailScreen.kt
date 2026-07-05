@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.recstash.data.RecipeEntity
-import java.io.File
+import com.example.recstash.data.imageModelFromPath
 
 @Composable
 fun RecipeDetailScreen(
@@ -53,7 +53,7 @@ fun RecipeDetailScreen(
 
             if (recipe.imagePath != null) {
                 AsyncImage(
-                    model = File(recipe.imagePath),
+                    model = imageModelFromPath(recipe.imagePath),
                     contentDescription = recipe.name,
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier
@@ -64,10 +64,53 @@ fun RecipeDetailScreen(
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
-            Text(
-                text = recipe.description,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            if (recipe.description.isNotBlank()) {
+                Text(
+                    text = recipe.description,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            if (recipe.ingredients.isNotBlank()) {
+                Text(
+                    text = "Ingredients",
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = recipe.ingredients,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+
+            if (recipe.instructions.isNotBlank()) {
+                Text(
+                    text = "Instructions",
+                    style = MaterialTheme.typography.titleLarge
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                val instructionSteps = recipe.instructions
+                    .lines()
+                    .map { it.trim() }
+                    .filter { it.isNotBlank() }
+
+                instructionSteps.forEachIndexed { index, step ->
+                    Text(
+                        text = "${index + 1}. $step",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+
+                    Spacer(modifier = Modifier.height(6.dp))
+                }
+            }
         }
     }
 }
@@ -80,6 +123,8 @@ fun RecipeDetailScreenPreview() {
             recipe = RecipeEntity(
                 name = "Pasta",
                 description = "A simple tomato pasta with garlic and basil.",
+                instructions = "Cook Tomato\nBoil Tomato\nEat Plastic",
+                ingredients = "1 Tomato\n1 another Tomato",
                 imagePath = null
             ),
             onBack = {},

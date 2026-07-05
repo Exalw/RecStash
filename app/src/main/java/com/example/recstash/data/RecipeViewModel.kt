@@ -20,6 +20,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun addRecipe(
         name: String,
         description: String,
+        ingredients: String,
+        instructions: String,
         imagePath: String?
     ) {
         viewModelScope.launch {
@@ -27,6 +29,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
                 RecipeEntity(
                     name = name,
                     description = description,
+                    ingredients = ingredients,
+                    instructions = instructions,
                     imagePath = imagePath
                 )
             )
