@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [RecipeEntity::class],
-    version = 2
+    version = 3
 )
 abstract class RecipeDatabase : RoomDatabase() {
     abstract fun recipeDao(): RecipeDao
@@ -23,19 +23,32 @@ abstract class RecipeDatabase : RoomDatabase() {
         fun getDatabase(context: Context): RecipeDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
-                                context.applicationContext,
-                                RecipeDatabase::class.java,
-                                "recipe_database"
+                    context.applicationContext,
+                    RecipeDatabase::class.java,
+                    "recipe_database"
                 )
                     .addCallback(object : RoomDatabase.Callback() {
-                    override fun onCreate(db: SupportSQLiteDatabase) {
-                        super.onCreate(db)
+                        override fun onCreate(db: SupportSQLiteDatabase) {
+                            super.onCreate(db)
 
-                        CoroutineScope(Dispatchers.IO).launch {
-                            INSTANCE?.recipeDao()?.insertRecipes(DefaultRecipes.recipes)
+                            DefaultRecipes.recipes.forEach { recipe ->
+                                db.execSQL(
+                                    """
+                                INSERT INTO recipes 
+                                (name, description, ingredients, instructions, imagePath)
+                                VALUES (?, ?, ?, ?, ?)
+                                """.trimIndent(),
+                                    arrayOf(
+                                        recipe.name,
+                                        recipe.description,
+                                        recipe.ingredients,
+                                        recipe.instructions,
+                                        recipe.imagePath
+                                    )
+                                )
+                            }
                         }
-                    }
-                })
+                    })
                     .fallbackToDestructiveMigration(false)
                     .build()
 

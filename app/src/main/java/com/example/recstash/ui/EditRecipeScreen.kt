@@ -5,6 +5,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -26,6 +28,8 @@ fun EditRecipeScreen(
     var name by remember { mutableStateOf(recipe.name) }
     var description by remember { mutableStateOf(recipe.description) }
     var imagePath by remember { mutableStateOf(recipe.imagePath) }
+    var ingredients by remember { mutableStateOf(recipe.ingredients) }
+    var instructions by remember { mutableStateOf(recipe.instructions) }
 
     var showDeleteConfirm by remember { mutableStateOf(false) }
     var showVerySureConfirm by remember { mutableStateOf(false) }
@@ -91,6 +95,7 @@ fun EditRecipeScreen(
                 .safeDrawingPadding()
                 .padding(16.dp)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = "Edit Recipe",
@@ -109,18 +114,6 @@ fun EditRecipeScreen(
             )
 
             Spacer(modifier = Modifier.height(12.dp))
-
-            OutlinedTextField(
-                value = description,
-                onValueChange = { description = it },
-                label = { Text("Description") },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .testTag("edit_description"),
-                minLines = 3
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             if (imagePath != null) {
                 val context = LocalContext.current
@@ -144,6 +137,42 @@ fun EditRecipeScreen(
             ) {
                 Text("Change Image")
             }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Description") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("edit_description"),
+                minLines = 3
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = ingredients,
+                onValueChange = { ingredients = it },
+                label = { Text("Ingredients") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("edit_ingredients"),
+                minLines = 4
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = instructions,
+                onValueChange = { instructions = it },
+                label = { Text("Instructions") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .testTag("edit_instructions"),
+                minLines = 4
+            )
         }
     }
 

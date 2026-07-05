@@ -1,6 +1,8 @@
 package com.example.recstash.ui
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -43,6 +45,7 @@ fun RecipeDetailScreen(
                 .safeDrawingPadding()
                 .padding(16.dp)
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = recipe.name,
@@ -71,7 +74,8 @@ fun RecipeDetailScreen(
                     style = MaterialTheme.typography.bodyLarge
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(24.dp)
+                    .verticalScroll(rememberScrollState()))
             }
 
             if (recipe.ingredients.isNotBlank()) {
