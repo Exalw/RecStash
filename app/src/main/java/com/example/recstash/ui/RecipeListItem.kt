@@ -11,10 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.recstash.data.RecipeEntity
-import com.example.recstash.data.imageModelFromPath
 
 @Composable
     fun RecipeListItem(
@@ -35,8 +35,9 @@ import com.example.recstash.data.imageModelFromPath
                 verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
             ) {
                 if (recipe.imagePath != null) {
+                    val context = LocalContext.current
                     AsyncImage(
-                        model = imageModelFromPath(recipe.imagePath),
+                        model = imageModelFromPath(context, recipe.imagePath),
                         contentDescription = recipe.name,
                         modifier = Modifier
                             .size(72.dp)

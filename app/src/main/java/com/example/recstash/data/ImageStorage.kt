@@ -24,11 +24,3 @@ fun copyImageToAppStorage(
 
     return imageFile.absolutePath
 }
-
-fun imageModelFromPath(imagePath: String): Any {
-    return if (imagePath.startsWith("android.resource://")) {
-        imagePath
-    } else {
-        File(imagePath)
-    }
-}

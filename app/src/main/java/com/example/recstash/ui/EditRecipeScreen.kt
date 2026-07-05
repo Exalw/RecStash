@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.example.recstash.data.RecipeEntity
 import com.example.recstash.data.copyImageToAppStorage
-import com.example.recstash.data.imageModelFromPath
 
 @Composable
 fun EditRecipeScreen(
@@ -124,8 +123,9 @@ fun EditRecipeScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             if (imagePath != null) {
+                val context = LocalContext.current
                 AsyncImage(
-                    model = imageModelFromPath(imagePath!!),
+                    model = imageModelFromPath(context, imagePath!!),
                     contentDescription = name,
                     modifier = Modifier
                         .fillMaxWidth()
