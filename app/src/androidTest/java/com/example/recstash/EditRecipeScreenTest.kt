@@ -44,8 +44,8 @@ class EditRecipeScreenTest {
         composeTestRule.onNodeWithText("Edit Recipe").assertIsDisplayed()
         composeTestRule.onNodeWithText("Pasta").assertIsDisplayed()
         composeTestRule.onNodeWithText("Old description").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Save").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Cancel").assertIsDisplayed()
+        composeTestRule.onNodeWithTag("save_button").performClick()
+        composeTestRule.onNodeWithTag("cancel_button").performClick()
         composeTestRule.onNodeWithText("Delete").assertIsDisplayed()
     }
 

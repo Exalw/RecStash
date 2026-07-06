@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -27,13 +28,19 @@ fun RecipeDetailScreen(
                     .safeDrawingPadding()
                     .padding(16.dp)
             ) {
-                OutlinedButton(onClick = onBack) {
+                OutlinedButton(
+                    onClick = onBack,
+                    modifier = Modifier.testTag("back_button")
+                ) {
                     Text("Back")
                 }
 
                 Spacer(modifier = Modifier.width(12.dp))
 
-                Button(onClick = onEdit) {
+                Button(
+                    onClick = onEdit,
+                    modifier = Modifier.testTag("edit_button")
+                ) {
                     Text("Edit")
                 }
             }

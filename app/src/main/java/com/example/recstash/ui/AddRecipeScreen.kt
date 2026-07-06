@@ -69,6 +69,7 @@ fun AddRecipeScreen(
             onValueChange = { name = it },
             label = { Text("Recipe name") },
             modifier = Modifier.fillMaxWidth()
+                .testTag("add_name")
         )
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -112,7 +113,8 @@ fun AddRecipeScreen(
                     imagePicker.launch(
                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                     )
-                }
+                },
+                modifier = Modifier.testTag("image_button")
             ) {
                 Text("Choose Image")
             }
@@ -126,14 +128,18 @@ fun AddRecipeScreen(
                     if (name.isNotBlank()) {
                         onSave(name, description, ingredients, instructions, imagePath)
                     }
-                }
+                },
+                modifier = Modifier.testTag("save_button")
             ) {
                 Text("Save")
             }
 
             Spacer(modifier = Modifier.width(12.dp))
 
-            OutlinedButton(onClick = onCancel) {
+            OutlinedButton(
+                onClick = onCancel,
+                modifier = Modifier.testTag("cancel_button")
+            ) {
                 Text("Cancel")
             }
         }
