@@ -1,11 +1,9 @@
 package com.example.recstash.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.FloatingActionButton
@@ -34,16 +32,17 @@ import com.example.recstash.data.RecipeEntity
             Column(
                 modifier = Modifier
                     .padding(padding)
-                    .safeDrawingPadding()
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp)
                     .fillMaxSize()
             ) {
+
                 Text(
                     text = "Recipes",
-                    style = MaterialTheme.typography.headlineLarge
+                    style = MaterialTheme.typography.headlineLarge,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp)
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
 
                 LazyColumn {
                     items(recipes) { recipe ->

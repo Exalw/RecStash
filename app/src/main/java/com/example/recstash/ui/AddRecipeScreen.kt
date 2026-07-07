@@ -10,13 +10,18 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,97 +56,117 @@ fun AddRecipeScreen(
         }
     }
 
-    Column(
-        modifier = Modifier
-            .safeDrawingPadding()
-            .padding(16.dp)
-            .fillMaxSize()
-    ) {
-        Text(
-            text = "Add Recipe",
-            style = MaterialTheme.typography.headlineLarge
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Recipe name") },
-            modifier = Modifier.fillMaxWidth()
-                .testTag("add_name")
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
-            label = { Text("Short description") },
-            modifier = Modifier.fillMaxWidth()
-                .testTag("add_description"),
-            minLines = 2
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = ingredients,
-            onValueChange = { ingredients = it },
-            label = { Text("Ingredients") },
-            modifier = Modifier.fillMaxWidth()
-                .testTag("add_ingredients"),
-            minLines = 4
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = instructions,
-            onValueChange = { instructions = it },
-            label = { Text("Instructions") },
-            modifier = Modifier.fillMaxWidth()
-                .testTag("add_instructions"),
-            minLines = 4
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Row {
-            OutlinedButton(
-                onClick = {
-                    imagePicker.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                    )
-                },
-                modifier = Modifier.testTag("image_button")
+    Scaffold(
+        bottomBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .navigationBarsPadding()
+                    .imePadding()
+                    .padding(12.dp)
             ) {
-                Text("Choose Image")
-            }
-
-            if (imagePath != null) {
-                Text("Image selected")
-            }
-
-            Button(
-                onClick = {
-                    if (name.isNotBlank()) {
-                        onSave(name, description, ingredients, instructions, imagePath)
+                Column{
+                    if (imagePath != null) {
+                        Text("Image selected")
                     }
-                },
-                modifier = Modifier.testTag("save_button")
-            ) {
-                Text("Save")
-            }
 
-            Spacer(modifier = Modifier.width(12.dp))
+                    OutlinedButton(
+                        onClick = {
+                            imagePicker.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                        modifier = Modifier.testTag("image_button")
+                    ) {
+                        Text("Choose Image")
+                    }
 
-            OutlinedButton(
-                onClick = onCancel,
-                modifier = Modifier.testTag("cancel_button")
-            ) {
-                Text("Cancel")
+                    if (imagePath != null) {
+                        Text("")
+                    }
+                }
+
+                Spacer(modifier = Modifier.width(12.dp))
+
+                OutlinedButton(
+                    onClick = onCancel,
+                    modifier = Modifier.testTag("cancel_button")
+                ) {
+                    Text("Cancel")
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Button(
+                    onClick = {
+                        if (name.isNotBlank()) {
+                            onSave(name, description, ingredients, instructions, imagePath)
+                        }
+                    },
+                    modifier = Modifier.testTag("save_button")
+                ) {
+                    Text("Save")
+                }
             }
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .imePadding()
+        ) {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Text(
+                text = "Add Recipe",
+                style = MaterialTheme.typography.headlineLarge
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Recipe name") },
+                modifier = Modifier.fillMaxWidth()
+                    .testTag("add_name")
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Short description") },
+                modifier = Modifier.fillMaxWidth()
+                    .testTag("add_description"),
+                minLines = 2
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = ingredients,
+                onValueChange = { ingredients = it },
+                label = { Text("Ingredients") },
+                modifier = Modifier.fillMaxWidth()
+                    .testTag("add_ingredients"),
+                minLines = 4
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = instructions,
+                onValueChange = { instructions = it },
+                label = { Text("Instructions") },
+                modifier = Modifier.fillMaxWidth()
+                    .testTag("add_instructions"),
+                minLines = 4
+            )
         }
     }
 }

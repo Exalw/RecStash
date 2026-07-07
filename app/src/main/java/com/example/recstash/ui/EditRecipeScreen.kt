@@ -49,7 +49,8 @@ fun EditRecipeScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .safeDrawingPadding()
+                    .navigationBarsPadding()
+                    .imePadding()
                     .padding(16.dp)
             ) {
                 OutlinedButton(
@@ -94,11 +95,13 @@ fun EditRecipeScreen(
         Column(
             modifier = Modifier
                 .padding(padding)
-                .safeDrawingPadding()
-                .padding(16.dp)
+                .padding(horizontal = 16.dp)
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .imePadding()
         ) {
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = "Edit Recipe",
                 style = MaterialTheme.typography.headlineLarge
