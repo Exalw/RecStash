@@ -47,6 +47,7 @@ import com.example.recstash.data.RecipeEntity
 
                 Text(
                     text = recipe.name,
+                    maxLines = 3,
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.weight(1f)
                 )
